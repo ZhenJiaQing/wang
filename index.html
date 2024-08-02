@@ -1,0 +1,145 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Waterfall Effect</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* 更改背景颜色 */
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            transform: rotate(-10deg); /* Add this to tilt the entire page */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .text {
+            position: absolute;
+            color: #ff69b4;
+            opacity: 0;
+            animation: floatText 10s linear infinite, fadeInOut 10s linear infinite;
+            white-space: nowrap; /* Prevent text from wrapping */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes floatText {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleAnimation 3s linear infinite;
+        }
+
+        @keyframes particleAnimation {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="textContainer"></div>
+    <div class="container" id="particleContainer"></div>
+
+    <script>
+        const texts = [
+            "王紫彤天天开心！", "要加油哦，王紫彤", "♥", "前程似锦", "平安喜乐", "闪闪发光", "开心！", 
+            "王紫彤", "祝你四季平安", "要自信！",
+        ];
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function createTextElement(text) {
+            const element = document.createElement('div');
+            element.className = 'text';
+            element.style.left = `${getRandomInt(0, 90)}vw`;
+            element.style.top = `${getRandomInt(0, 90)}vh`;
+            element.style.fontSize = `${getRandomInt(2, 8)}vw`;
+            element.style.animationDuration = `${getRandomInt(5, 15)}s`;
+            element.style.transform = `rotate(${getRandomInt(-30, 30)}deg)`;
+            element.innerText = text;
+            return element;
+        }
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = `${getRandomInt(0, 100)}vw`;
+            particle.style.top = `${getRandomInt(0, 100)}vh`;
+            particle.style.animationDuration = `${getRandomInt(2, 4)}s`;
+            return particle;
+        }
+
+        function populateText() {
+            const container = document.getElementById('textContainer');
+            for (let i = 0; i < 30; i++) {
+                const textElement = createTextElement(texts[getRandomInt(0, texts.length - 1)]);
+                container.appendChild(textElement);
+            }
+        }
+
+        function populateParticles() {
+            const container = document.getElementById('particleContainer');
+            for (let i = 0; i < 50; i++) {
+                const particle = createParticle();
+                container.appendChild(particle);
+            }
+        }
+
+        populateText();
+        populateParticles();
+    </script>
+</body>
+</html>
