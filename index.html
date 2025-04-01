@@ -1,145 +1,567 @@
-
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Waterfall Effect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生日快乐！</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* 更改背景颜色 */
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef1f8;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: white;
-            font-family: 'Arial', sans-serif;
-            transform: rotate(-10deg); /* Add this to tilt the entire page */
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px 10px;
         }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        
         .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
             position: relative;
+            z-index: 1;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            padding: 2rem 1.5rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            z-index: 10; /* 增加到比心形更高 */
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ff7eb3, #ff758c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            color: #ff758c;
+        }
+        
+        .cake {
+            width: 150px;
+            height: 150px;
+            margin: 2rem auto;
+            position: relative;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        }
+        
+        .cake-base {
+            width: 150px;
+            height: 60px;
+            background: linear-gradient(to right, #fda299, #ff5a76);
+            border-radius: 15px;
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        .cake-middle {
+            width: 120px;
+            height: 50px;
+            background: linear-gradient(to right, #ff5a76, #db3775);
+            border-radius: 12px;
+            position: absolute;
+            bottom: 60px;
+            left: 15px;
+            z-index: 2;
+        }
+        
+        .cake-top {
+            width: 90px;
+            height: 40px;
+            background: linear-gradient(to right, #994274, #6c3d69);
+            border-radius: 10px;
+            position: absolute;
+            bottom: 110px;
+            left: 30px;
+            z-index: 3;
+        }
+        
+        /* 蜡烛 */
+        .candle {
+            width: 6px;
+            height: 30px;
+            background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+            position: absolute;
+            bottom: 150px;
+            left: 72px;
+            border-radius: 3px;
+            z-index: 4;
+        }
+        
+        /* 火焰 */
+        .flame {
+            width: 14px;
+            height: 20px;
+            background: radial-gradient(ellipse at center, #ffdb5c 0%, #ff9d34 60%, #ff5722 100%);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            bottom: 180px;
+            left: 68px;
+            transform-origin: center bottom;
+            animation: flicker 1s ease-in-out infinite alternate;
+            box-shadow: 0 0 10px #ffdb5c;
+            z-index: 5;
+        }
+        
+        /* 光晕效果 */
+        .flame::before {
+            content: '';
+            position: absolute;
             width: 100%;
             height: 100%;
-        }
-
-        .text {
-            position: absolute;
-            color: #ff69b4;
-            opacity: 0;
-            animation: floatText 10s linear infinite, fadeInOut 10s linear infinite;
-            white-space: nowrap; /* Prevent text from wrapping */
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes floatText {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes fadeInOut {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-
-        .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.8);
+            background: radial-gradient(ellipse at center, rgba(255, 219, 92, 0.5) 0%, rgba(255, 87, 34, 0) 70%);
             border-radius: 50%;
-            opacity: 0;
-            animation: particleAnimation 3s linear infinite;
+            filter: blur(5px);
+            transform: scale(1.5);
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        .button {
+            background: linear-gradient(45deg, #ff7eb3, #ff758c);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 123, 156, 0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 10px rgba(255, 123, 156, 0.2);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ff7eb3;
+            top: -20px;
+            z-index: -1;
+            animation: fall 10s linear infinite;
+        }
+        
+        .confetti:nth-child(2n) {
+            background-color: #ff758c;
+            animation-duration: 8s;
+            animation-delay: 1s;
+        }
+        
+        .confetti:nth-child(3n) {
+            background-color: #ffb347;
+            animation-duration: 9s;
+            animation-delay: 2s;
+        }
+        
+        .confetti:nth-child(4n) {
+            background-color: #06d6a0;
+            animation-duration: 11s;
+            animation-delay: 3s;
+        }
+        
+        .confetti:nth-child(5n) {
+            background-color: #5e60ce;
+            animation-duration: 12s;
+            animation-delay: 4s;
+        }
+        
+        /* 光晕脉动动画 */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1.5); }
+            50% { opacity: 0.8; transform: scale(2); }
+        }
+        
+        @keyframes flicker {
+            0% { transform: scaleY(1) scaleX(1) rotate(-2deg); opacity: 1; }
+            25% { transform: scaleY(1.1) scaleX(0.9) rotate(2deg); opacity: 0.9; }
+            50% { transform: scaleY(0.8) scaleX(1.1) rotate(-1deg); opacity: 0.8; }
+            75% { transform: scaleY(1.2) scaleX(0.8) rotate(1deg); opacity: 0.9; }
+            100% { transform: scaleY(1) scaleX(1) rotate(-2deg); opacity: 1; }
+        }
+        
+        @keyframes fall {
+            from { transform: translateY(0) rotate(0deg); opacity: 1; }
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        /* 背景彩色小点 */
+        .dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        /* 小矩形 */
+        .rect {
+            position: absolute;
+            width: 8px;
+            height: 3px;
+            z-index: -1;
+            transform: rotate(var(--rotation));
         }
 
-        @keyframes particleAnimation {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
+        /* 新增：笛卡尔爱心曲线容器 */
+        .heart-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1; /* 改为正值，但低于卡片 */
+            overflow: visible; /* 让溢出内容可见 */
+        }
+
+        /* 笛卡尔爱心粒子 */
+        .heart-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgb(255, 82, 145);
+            z-index: 1; /* 改为正值，但低于卡片 */
+            box-shadow: 0 0 8px rgba(255, 82, 145, 0.7);
+            will-change: transform; /* 优化动画性能 */
+        }
+
+        /* 爱心动画 */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        /* 笛卡尔方程显示样式 */
+        .equation-container {
+            position: relative;
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 15px rgba(255, 123, 156, 0.2);
+            text-align: center;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        
+        .equation {
+            font-family: 'Times New Roman', serif;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .equation span {
+            color: #ff4081;
+            font-weight: bold;
+        }
+        
+        .draw-button {
+            background: linear-gradient(45deg, #5e60ce, #4ea8de);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(94, 96, 206, 0.3);
+        }
+        
+        .draw-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 5px rgba(94, 96, 206, 0.2);
         }
     </style>
 </head>
 <body>
-    <div class="container" id="textContainer"></div>
-    <div class="container" id="particleContainer"></div>
+    <div class="container">
+        <div class="card">
+            <h1>生日快乐，美丽优雅的耿沵！</h1>
+            
+            <div class="cake">
+                <div class="cake-base"></div>
+                <div class="cake-middle"></div>
+                <div class="cake-top"></div>
+                <div class="candle"></div>
+                <div class="flame"></div>
+            </div>
+            
+            <!-- 新增：笛卡尔心形方程显示 -->
+            <div class="equation-container">
+                <h3>笛卡尔心形曲线方程：</h3>
+                <div class="equation"><span>x = 16sin³(t)</span></div>
+                <div class="equation"><span>y = 13cos(t) - 5cos(2t) - 2cos(3t) - cos(4t)</span></div>
+                <button class="draw-button" onclick="generateHeart()">生成心形</button>
+            </div>
+            
+            <button class="button" onclick="addMoreConfetti()">撒彩带</button>
+        </div>
+    </div>
 
+    <!-- 新增：笛卡尔爱心曲线容器 -->
+    <div class="heart-container" id="heartContainer"></div>
+    
     <script>
-        const texts = [
-            "王紫彤天天开心！", "要加油哦，王紫彤", "♥", "前程似锦", "平安喜乐", "闪闪发光", "开心！", 
-            "王紫彤", "祝你四季平安", "要自信！",
-        ];
-
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        function createTextElement(text) {
-            const element = document.createElement('div');
-            element.className = 'text';
-            element.style.left = `${getRandomInt(0, 90)}vw`;
-            element.style.top = `${getRandomInt(0, 90)}vh`;
-            element.style.fontSize = `${getRandomInt(2, 8)}vw`;
-            element.style.animationDuration = `${getRandomInt(5, 15)}s`;
-            element.style.transform = `rotate(${getRandomInt(-30, 30)}deg)`;
-            element.innerText = text;
-            return element;
-        }
-
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = `${getRandomInt(0, 100)}vw`;
-            particle.style.top = `${getRandomInt(0, 100)}vh`;
-            particle.style.animationDuration = `${getRandomInt(2, 4)}s`;
-            return particle;
-        }
-
-        function populateText() {
-            const container = document.getElementById('textContainer');
-            for (let i = 0; i < 30; i++) {
-                const textElement = createTextElement(texts[getRandomInt(0, texts.length - 1)]);
-                container.appendChild(textElement);
-            }
-        }
-
-        function populateParticles() {
-            const container = document.getElementById('particleContainer');
+        // 创建彩色小点背景
+        function createColorfulDots() {
+            const body = document.querySelector('body');
+            const colors = ['#ff7eb3', '#ff758c', '#ffb347', '#06d6a0', '#5e60ce', '#4ea8de', '#ff7eb3'];
+            
+            // 创建50个彩色点
             for (let i = 0; i < 50; i++) {
-                const particle = createParticle();
-                container.appendChild(particle);
+                const dot = document.createElement('div');
+                const isRect = Math.random() > 0.7;
+                
+                if (isRect) {
+                    dot.classList.add('rect');
+                    dot.style.setProperty('--rotation', `${Math.random() * 360}deg`);
+                } else {
+                    dot.classList.add('dot');
+                }
+                
+                dot.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                dot.style.left = `${Math.random() * 100}vw`;
+                dot.style.top = `${Math.random() * 100}vh`;
+                body.appendChild(dot);
+            }
+        }
+        
+        // 动态创建彩带效果
+        function createConfetti(count = 30, speed = 1) {
+            const container = document.querySelector('body');
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.width = Math.random() * 8 + 4 + 'px';
+                confetti.style.height = Math.random() * 8 + 4 + 'px';
+                confetti.style.animationDuration = (Math.random() * 5 + 5) / speed + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                
+                // 不同形状的彩带
+                const shape = Math.floor(Math.random() * 3);
+                if (shape === 0) {
+                    confetti.style.borderRadius = '50%';
+                } else if (shape === 1) {
+                    confetti.style.borderRadius = '0';
+                } else {
+                    confetti.style.borderRadius = '50% 0 50% 0';
+                }
+                
+                // 不同颜色的彩带
+                const colors = ['#ff7eb3', '#ff758c', '#ffb347', '#06d6a0', '#5e60ce', '#4ea8de'];
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(confetti);
+                
+                // 自动移除彩带元素（防止DOM过大）
+                setTimeout(() => {
+                    confetti.remove();
+                }, 10000);
             }
         }
 
-        populateText();
-        populateParticles();
+        // 新增：创建笛卡尔爱心曲线（带动画效果）
+        function createCartesianHeart(animate = false) {
+            const container = document.getElementById('heartContainer');
+            // 使用全不透明的纯色，不使用透明色
+            const heartColors = ['#ff5291', '#ff4081', '#ff3370', '#ff1493', '#ff0066'];
+            
+            // 清空容器
+            container.innerHTML = '';
+            
+            // 获取容器尺寸
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            // 笛卡尔爱心尺寸参数 - 进一步缩小心形尺寸
+            const heartSize = Math.min(width, height) * (width < 500 ? 0.9 : 0.55);
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            // 创建爱心粒子 - 进一步减少粒子数量
+            const numberOfParticles = width < 500 ? 300 : 500; // 减少粒子数量，使心形更小
+            const particles = [];
+            
+            // 如果需要动画，先创建粒子但暂不渲染
+            for (let i = 0; i < numberOfParticles; i++) {
+                // 使用更有序的方式生成粒子，使心形轮廓更明显
+                // 从0度开始，顺时针旋转生成粒子
+                const t = (i / numberOfParticles) * 2 * Math.PI;
+                
+                // 笛卡尔爱心参数方程
+                // x = 16 * (sin(t)^3)
+                // y = 13 * cos(t) - 5 * cos(2t) - 2 * cos(3t) - cos(4t)
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+                
+                // 缩放并将其移至中心，并根据屏幕尺寸调整偏移
+                const yOffset = width < 500 ? 0 : -120; // 移动端不做上移偏移
+                const scaledX = centerX + (x * heartSize / 32);
+                const scaledY = centerY - (y * heartSize / 32) + yOffset;
+                
+                // 创建粒子元素
+                const particle = document.createElement('div');
+                particle.classList.add('heart-particle');
+                
+                // 不使用随机颜色，使用固定颜色，避免透明度问题
+                // const randomColor = heartColors[Math.floor(Math.random() * heartColors.length)];
+                // particle.style.backgroundColor = randomColor;
+                
+                // 根据设备调整粒子大小 - 进一步减小粒子
+                const sizeMultiplier = width < 500 ? 1.2 : 0.8; // 整体缩小粒子
+                const size = (Math.random() * 6 + 4) * sizeMultiplier;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 增加透明度，不使用半透明
+                particle.style.opacity = "1";
+                
+                // 添加心跳动画和出现动画
+                particle.style.animation = `heartbeat ${Math.random() * 2 + 2}s infinite`;
+                particle.style.animationDelay = `${Math.random() * 2}s`;
+                
+                // 添加出现时的放大效果
+                particle.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    particle.style.transition = 'transform 0.5s ease-out';
+                    particle.style.transform = 'scale(1)';
+                }, 10);
+                
+                // 保存粒子数据
+                particles.push({
+                    element: particle,
+                    x: scaledX,
+                    y: scaledY
+                });
+            }
+            
+            // 如果需要动画，则逐个添加粒子到容器中
+            if (animate) {
+                // 移动端生成间隔要快一些
+                const intervalTime = width < 500 ? 10 : 15;
+                
+                let index = 0;
+                const intervalId = setInterval(() => {
+                    if (index < particles.length) {
+                        const particle = particles[index];
+                        
+                        // 设置位置
+                        particle.element.style.left = `${particle.x}px`;
+                        particle.element.style.top = `${particle.y}px`;
+                        
+                        // 添加到容器
+                        container.appendChild(particle.element);
+                        
+                        index++;
+                    } else {
+                        clearInterval(intervalId);
+                    }
+                }, intervalTime); // 使用动态间隔时间
+            } else {
+                // 直接添加所有粒子
+                particles.forEach(particle => {
+                    particle.element.style.left = `${particle.x}px`;
+                    particle.element.style.top = `${particle.y}px`;
+                    container.appendChild(particle.element);
+                });
+            }
+        }
+        
+        // 新增：生成心形的动画函数
+        function generateHeart() {
+            // 更改按钮状态
+            const button = document.querySelector('.draw-button');
+            button.disabled = true;
+            button.textContent = '正在生成...';
+            
+            const heartContainer = document.getElementById('heartContainer');
+            
+            // 清除可能已存在的心形
+            heartContainer.innerHTML = '';
+            
+            // 在移动设备上设置背景色以提升可见性，但不要改变透明度
+            if (window.innerWidth < 500) {
+                // 不设置背景色，避免颜色变淡问题
+                // heartContainer.style.backgroundColor = 'rgba(240, 240, 255, 0.3)';
+            }
+            
+            // 带动画效果地创建爱心
+            createCartesianHeart(true);
+            
+            // 恢复按钮状态
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = '重新生成';
+            }, 8000); // 增加时间，适应更慢的动画
+        }
+
+        // 监听窗口大小变化，更新心形
+        window.addEventListener('resize', () => {
+            // 如果心形容器内有元素，则重新生成心形
+            if (document.getElementById('heartContainer').children.length > 0) {
+                createCartesianHeart(false); // 窗口大小变化时不使用动画
+            }
+        });
+        
+        // 页面加载完成后创建背景点和彩带，不自动创建爱心
+        window.addEventListener('load', () => {
+            createColorfulDots();
+            createConfetti(20);
+            // 不自动创建爱心，等待用户点击按钮后创建
+            
+            // 确保卡片背景不透明，让心形在后面
+            setTimeout(() => {
+                const card = document.querySelector('.card');
+                card.style.transition = 'background-color 0.5s ease';
+                card.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                card.style.zIndex = '5'; // 确保卡片在心形前面
+            }, 1000);
+        });
+        
+        // 点击按钮添加更多彩带并加快速度
+        function addMoreConfetti() {
+            // 添加更多彩带，并使其下落速度加快
+            createConfetti(50, 2);
+            
+            // 添加按钮点击效果
+            const button = document.querySelector('.button');
+            button.disabled = true;
+            button.textContent = '彩带飞舞中...';
+            
+            // 2秒后恢复按钮状态
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = '撒彩带';
+            }, 2000);
+        }
     </script>
 </body>
 </html>
